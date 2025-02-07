@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QDialog
 from PySide6.QtGui import QStandardItemModel, QStandardItem, QColor
@@ -25,6 +26,7 @@ class MainWindow(QMainWindow):
         self.ui.pushButton_2.clicked.connect(self.remove_item)
         self.ui.pushButton.clicked.connect(self.edit_item)
         self.ui.pushButton_5.clicked.connect(self.save_list_data)
+        self.ui.pushButton_7.clicked.connect(self.load_list_data)
         
     def add_item(self):
         title = self.ui.lineEdit.text()
@@ -73,10 +75,17 @@ class MainWindow(QMainWindow):
         tasks_dict = [task.to_dict() for task in self.list_data]
 
         with open('backup.json', 'w') as file:
-            # handle datetime objects
             json.dump(tasks_dict, file, indent=4)
             
         print("App data was saved to file: backup.json")
+        
+    def load_list_data(self):
+        with open("backup.json", "r") as f:
+            data = json.load(f)
+
+        self.list_data = [Task(**item) for item in data]
+        
+        self.display_list()
 
 if __name__ == '__main__':
     app = QApplication([])
