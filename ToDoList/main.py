@@ -1,11 +1,12 @@
 import json
 
-from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtWidgets import QApplication, QMainWindow, QDialog
 from PySide6.QtGui import QStandardItemModel, QStandardItem, QColor
 from PySide6.QtCore import Qt
     
-from layout import Ui_Dialog
-from Task import Task
+from utils.layout import Ui_Dialog
+from utils.Task import Task
+from utils.ComboBoxDialog import ComboBoxDialog
     
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -22,6 +23,8 @@ class MainWindow(QMainWindow):
         
         self.ui.pushButton_6.clicked.connect(self.add_item)
         self.ui.pushButton_2.clicked.connect(self.remove_item)
+        self.ui.pushButton.clicked.connect(self.edit_item)
+        self.ui.pushButton_5.clicked.connect(self.save_list_data)
         
     def add_item(self):
         title = self.ui.lineEdit.text()
@@ -48,7 +51,12 @@ class MainWindow(QMainWindow):
             print("No item is selected!")
             return
         
-        # tutaj dodaj display dla nowego boxa z selectem pomiędzy statusami dostępnymi
+        dialog = ComboBoxDialog()
+        if dialog.exec() == QDialog.Accepted:
+            selected_value = dialog.get_selected_value()
+            self.list_data[clicked_id].status = selected_value
+        else:
+            print("Dialog was canceled.")
         
         self.display_list()
         
@@ -60,6 +68,15 @@ class MainWindow(QMainWindow):
             if task.is_past_due():
                 item.setData(QColor("red"), Qt.ForegroundRole)
             self.model.appendRow(item)
+            
+    def save_list_data(self):
+        tasks_dict = [task.to_dict() for task in self.list_data]
+
+        with open('backup.json', 'w') as file:
+            # handle datetime objects
+            json.dump(tasks_dict, file, indent=4)
+            
+        print("App data was saved to file: backup.json")
 
 if __name__ == '__main__':
     app = QApplication([])

@@ -11,3 +11,10 @@ class Task():
     
     def __str__(self):
         return f"{self.title} || {self.status} || {self.due_date.strftime("%Y-%m-%d %H:%M")}"
+    
+    def to_dict(self):
+        return {
+            "title": self.title,
+            "status": self.status,
+            "due_date": self.due_date
+        }
