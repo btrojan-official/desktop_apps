@@ -1,35 +1,32 @@
-from PySide6.QtWidgets import QApplication, QLabel, QVBoxLayout, QCalendarWidget, QMainWindow
+from PySide6.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout, QCalendarWidget, QMainWindow
 from PySide6.QtGui import  QAction
 from PySide6.QtCore import *
 
-import sys
-
-class MainWindow(QMainWindow):
+class MainWindow(QWidget):
     def __init__(self):
         super(MainWindow, self).__init__()
         
         self.setWindowTitle("Calendar Widget")
-        self.setGeometry(400, 400, 800, 600)
+        self.resize(400, 300)
         
-        layout = QVBoxLayout()
+        self.layout = QVBoxLayout()
         
         self.calendar = QCalendarWidget(self)
         self.calendar.setGridVisible(True)
-        layout.addWidget(self.calendar)
+        self.layout.addWidget(self.calendar)
         
-        self.label = QLabel(self)
-        layout.addWidget(self.label)
+        self.label = QLabel("Wybrana data: ")
+        self.layout.addWidget(self.label)
         
+        self.locale = QLocale.system()
         
-        locale = QLocale.system()
-        self.calendar.setFirstDayOfWeek(locale.firstDayOfWeek())
+        self.calendar.setFirstDayOfWeek(self.locale.firstDayOfWeek())
         
     def show_date(self):
         selected_date = self.calendar.selectedDate()
         
-        locale = QLocale.system()
-        day_name = locale.dayName(selected_date.dayOfWeek())
-        month_name = locale.monthName(selected_date.month())
+        day_name = self.locale.dayName(selected_date.dayOfWeek())
+        month_name = self.locale.monthName(selected_date.month())
         
         formatted_date = f"{day_name}, {selected_date.day()} {month_name} {selected_date.year()}"
         
@@ -37,7 +34,7 @@ class MainWindow(QMainWindow):
             
             
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
+    app = QApplication([])
     window = MainWindow()
     window.show()
     app.exec_()
