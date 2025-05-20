@@ -25,7 +25,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(783, 575)
+        MainWindow.resize(783, 556)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout_2 = QVBoxLayout(self.centralwidget)
@@ -102,21 +102,14 @@ class Ui_MainWindow(object):
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setGeometry(QRect(0, 0, 783, 33))
-        self.menu_open = QMenu(self.menubar)
-        self.menu_open.setObjectName(u"menu_open")
-        self.menuSave_as = QMenu(self.menubar)
-        self.menuSave_as.setObjectName(u"menuSave_as")
-        self.menu_help = QMenu(self.menubar)
-        self.menu_help.setObjectName(u"menu_help")
+        self.menu_file = QMenu(self.menubar)
+        self.menu_file.setObjectName(u"menu_file")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-        self.menubar.addAction(self.menu_open.menuAction())
-        self.menubar.addAction(self.menuSave_as.menuAction())
-        self.menubar.addAction(self.menu_help.menuAction())
-        self.menuSave_as.addSeparator()
+        self.menubar.addAction(self.menu_file.menuAction())
 
         self.retranslateUi(MainWindow)
 
@@ -128,10 +121,8 @@ class Ui_MainWindow(object):
         self.filter_button.setText(QCoreApplication.translate("MainWindow", u"Filter", None))
         self.chart_button.setText(QCoreApplication.translate("MainWindow", u"Generate Chart", None))
         self.undo_button.setText("")
-        self.path_label.setText(QCoreApplication.translate("MainWindow", u"Path: C://ProgramFiles/danger_virus.bat", None))
-        self.records_label.setText(QCoreApplication.translate("MainWindow", u"Records: 1901", None))
-        self.menu_open.setTitle(QCoreApplication.translate("MainWindow", u"Open", None))
-        self.menuSave_as.setTitle(QCoreApplication.translate("MainWindow", u"Save as", None))
-        self.menu_help.setTitle(QCoreApplication.translate("MainWindow", u"Help", None))
+        self.path_label.setText(QCoreApplication.translate("MainWindow", u"Path: None", None))
+        self.records_label.setText(QCoreApplication.translate("MainWindow", u"Records: 0", None))
+        self.menu_file.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
     # retranslateUi
 
